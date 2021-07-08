@@ -1,3 +1,5 @@
+import axios from "axios";
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
@@ -28,8 +30,6 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -58,3 +58,93 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+/**
+ * Making a card using passed in data
+ * @param {string} data - Data to convert into a card
+ */
+const cardMaker = (data) => {
+	//Defining Varables
+	const cardHolder = document.querySelector(".cards"),
+		card = document.createElement("div"),
+		cardInfo = document.createElement("div"),
+		profileFollowers = document.createElement("p"),
+		profileFollowing = document.createElement("p"),
+		cardUserName = document.createElement("p"),
+		cardLocation = document.createElement("p"),
+		profileBio = document.createElement("p"),
+		cardImage = document.createElement("img"),
+		cardName = document.createElement("h3"),
+		profileAddress = document.createElement("a"),
+		cardBodyInfo = [
+			cardName,
+			cardUserName,
+			cardLocation,
+			profileAddress,
+			profileFollowers,
+			profileFollowing,
+			profileBio,
+		];
+	//Assigning Data To Varables
+	card.className = "card";
+	cardImage.src = data["avatar_url"];
+	cardInfo.classList.add("card-info");
+	//Looping Through The Body Elements
+	cardBodyInfo.forEach((element) => {
+		switch (element) {
+			case cardName: {
+				cardName.classList.add(`name`);
+				cardName.textContent = data["name"];
+			}
+			case cardUserName: {
+				cardUserName.classList.add("username");
+				cardUserName.textContent = `Username: ${data["login"]}`;
+			}
+			case cardLocation: {
+				cardLocation.textContent = `Location: ${
+					data["location"] ? data["location"] : "Area 51"
+				}`;
+			}
+			case profileAddress: {
+				profileAddress.setAttribute("src", data["url"]);
+			}
+			case profileFollowers: {
+				profileFollowers.textContent = `Followers: ${data["followers"]}`;
+			}
+			case profileFollowing: {
+				profileFollowing.textContent = `Following: ${data["following"]}`;
+			}
+			case profileBio: {
+				profileBio.textContent = data["bio"]
+					? data["bio"]
+					: "Too good for bios! Also loves Jamaria...";
+			}
+		}
+		cardInfo.appendChild(element);
+	});
+	cardHolder.appendChild(card);
+	card.appendChild(cardImage);
+	card.appendChild(cardInfo);
+};
+const arrayOfUsers = [
+	"https://api.github.com/users/BrityHemming",
+	"https://api.github.com/users/tetondan",
+	"https://api.github.com/users/dustinmyers",
+	"https://api.github.com/users/justsml",
+	"https://api.github.com/users/luishrd",
+	"https://api.github.com/users/bigknell",
+	`https://api.github.com/users/JamariaSims`,
+	`https://api.github.com/users/BrandonWorobi`,
+	`https://api.github.com/users/irasanchez`,
+	`https://api.github.com/users/ray-rafe`,
+];
+for (let i = 0; i < arrayOfUsers.length; i++) {
+	axios
+		.get(arrayOfUsers[i])
+		.then((response) => {
+			cardMaker(response.data);
+		})
+		.catch((e) => {
+			window.alert(e);
+		});
+}
