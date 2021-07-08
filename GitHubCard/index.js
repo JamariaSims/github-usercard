@@ -138,6 +138,9 @@ const arrayOfUsers = [
 	`https://api.github.com/users/irasanchez`,
 	`https://api.github.com/users/ray-rafe`,
 ];
+for (let i = 0; i < 20; i++) {
+	arrayOfUsers.push(`https://api.github.com/users/${i}`);
+}
 for (let i = 0; i < arrayOfUsers.length; i++) {
 	axios
 		.get(arrayOfUsers[i])
