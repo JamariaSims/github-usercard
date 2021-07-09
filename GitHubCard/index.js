@@ -138,16 +138,22 @@ const arrayOfUsers = [
 	`https://api.github.com/users/irasanchez`,
 	`https://api.github.com/users/ray-rafe`,
 ];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < Math.floor(Math.random() * 20); i++) {
 	arrayOfUsers.push(`https://api.github.com/users/${i}`);
 }
 for (let i = 0; i < arrayOfUsers.length; i++) {
-	axios
-		.get(arrayOfUsers[i])
-		.then((response) => {
-			cardMaker(response.data);
-		})
-		.catch((e) => {
-			window.alert(e);
-		});
+	setTimeout(() => {
+		axios
+			.get(arrayOfUsers[i], {
+				headers: {
+					Authorization: `token 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`,
+				},
+			})
+			.then((response) => {
+				cardMaker(response.data);
+			})
+			.catch((e) => {
+				console.log(e);
+			});
+	}, 5000);
 }
