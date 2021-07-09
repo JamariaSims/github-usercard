@@ -97,7 +97,9 @@ const cardMaker = (data) => {
 				profileFollowing.textContent = `Following: ${data["following"]}`;
 			}
 			case profileBio: {
-				profileBio.textContent = data["bio"] ? data["bio"] : jokes[index];
+				profileBio.textContent = data["bio"]
+					? data["bio"]
+					: jokes[Math.floor(Math.random() * jokes.length)];
 			}
 		}
 		cardInfo.appendChild(element);
