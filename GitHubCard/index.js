@@ -131,5 +131,5 @@ for (let i = 0; i < arrayOfUsers.length; i++) {
 			.catch((e) => {
 				console.log(e);
 			});
-	}, 5000);
+	}, 1000);
 }
